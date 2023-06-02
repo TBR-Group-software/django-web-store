@@ -1,0 +1,81 @@
+version: "3.9"
+services:
+  django-store:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    container_name: django-store
+    restart: always
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "
+             python3 manage.py makemigrations &&
+             python3 manage.py migrate &&
+             python3 manage.py collectstatic --no-input &&
+             daphne -b 0.0.0.0 -p 8000 django_store.asgi:application"
+    volumes:
+      - .:/app
+      - static-volume:/app/staticfiles
+      - media-volume:/app/media
+    networks:
+      - django-store-network
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_HOST=django-store-db
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
+      - DJANGO_DEBUG=${DJANGO_DEBUG}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+    depends_on:
+      - django-store-db
+  django-store-nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    container_name: django-store-nginx
+    restart: always
+    ports:
+      - 80:80
+    networks:
+      - django-store-network
+    volumes:
+      - static-volume:/var/www/app/staticfiles
+      - media-volume:/var/www/app/media
+    depends_on:
+      - django-store
+  improve-text-ai-db:
+    image: postgres:15.1-alpine
+    container_name: improve-text-ai-db
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - '${POSTGRES_PORT}:${POSTGRES_PORT}'
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - django-store-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+volumes:
+  static-volume:
+  media-volume:
+  db:
+    driver: local
+networks:
+  django-store-network:
+    external: true
+    driver: bridge
