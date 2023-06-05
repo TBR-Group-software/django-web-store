@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+{% block imports %}
+    {{ block.super }}
+{% endblock imports %}
+{% block title %}
+    {{ product.name }}
+{% endblock title %}
+{% block content %}
+    <div>
+    Product {{ product.name }}
+    </div>
+{% endblock content %}

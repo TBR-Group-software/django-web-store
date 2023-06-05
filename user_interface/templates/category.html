@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+{% block imports %}
+    {{ block.super }}
+{% endblock imports %}
+{% block title %}
+    {{ category.name }}
+{% endblock title %}
+{% block content %}
+    <div>
+    Category {{ category.name }}
+    </div>
+{% endblock content %}

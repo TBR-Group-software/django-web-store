@@ -1,0 +1,17 @@
+@import "custom";
+
+
+.modal-dialog{
+    max-width: 900px;
+    .modal-header, .modal-footer {
+        border-color: #A5D7E8!important;
+    }
+    .modal-content{
+        background-color: #19376D!important;
+        border-radius: 15px;
+    }
+}
+
+.text-justify{
+    text-align: justify;
+}
