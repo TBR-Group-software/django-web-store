@@ -1,17 +1,74 @@
 @import "custom";
 
+@import url(//db.onlinewebfonts.com/c/b82329475307e0380dc1ea23f0c35266?family=adineue+PRO);
 
-.modal-dialog{
+@font-face {
+    font-family: "adineue PRO";
+    src: url("//db.onlinewebfonts.com/t/b82329475307e0380dc1ea23f0c35266.eot");
+    src: url("//db.onlinewebfonts.com/t/b82329475307e0380dc1ea23f0c35266.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/b82329475307e0380dc1ea23f0c35266.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/b82329475307e0380dc1ea23f0c35266.woff") format("woff"), url("//db.onlinewebfonts.com/t/b82329475307e0380dc1ea23f0c35266.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/b82329475307e0380dc1ea23f0c35266.svg#adineue PRO") format("svg");
+}
+
+$primary: #ff626d;
+$primary-second: #fcad72;
+$primary-gradient: linear-gradient(32deg, #ff626d 0%, #fcad72 100%);
+
+$second: #333235;
+$third: #232227;
+
+body {
+    background-color: $second;
+    color: white;
+    font-family: 'adineue PRO'!important;
+}
+
+.modal-dialog {
     max-width: 900px;
-    .modal-header, .modal-footer {
-        border-color: #A5D7E8!important;
+
+    .modal-header,
+    .modal-footer {
+        border-color: #A5D7E8 !important;
     }
-    .modal-content{
-        background-color: #19376D!important;
+
+    .modal-content {
+        background-color: #19376D !important;
         border-radius: 15px;
     }
 }
 
-.text-justify{
+.text-justify {
     text-align: justify;
+}
+
+.bg-primary {
+    background: $primary;
+    background: $primary-gradient;
+}
+
+.navbar-shadow {
+    -webkit-box-shadow: 0px 9px 51px 14px rgba($second, 0.47);
+    -moz-box-shadow: 0px 9px 51px 14px rgba($second, 0.47);
+    box-shadow: 0px 9px 51px 14px rgba($second, 0.47);
+}
+
+.btn {
+    border-radius: 20px;
+    text-transform: uppercase;
+    padding: 10px 30px 10px 30px;
+}
+
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #333235;
+    --bs-btn-border-color: #333235;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #232227;
+    --bs-btn-hover-border-color: #232227;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #232227;
+    --bs-btn-active-border-color: #232227;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #333235;
+    --bs-btn-disabled-border-color: #333235;
 }

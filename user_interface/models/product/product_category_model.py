@@ -6,7 +6,7 @@ from django.template.defaultfilters import slugify
 class ProductCategory(models.Model):
     product = models.ManyToManyField(Product)
     category = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True)
 
     def __str__(self):
         return self.product.name

@@ -1,0 +1,76 @@
+@import "base.scss";
+
+.color-input:checked+label>img {
+    box-shadow: 0 0 10px 3px $second;
+}
+
+.color-input+label>img {
+    width: 85px;
+    height: 85px;
+    transition: 200ms all;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.carousel {
+    max-width: 500px;
+
+    .carousel-inner {
+        border-radius: 50%;
+        box-shadow: 0 0 30px 2px $second;
+    }
+}
+
+.main-info {
+    max-height: 666px;
+}
+
+.size-input+label {
+    display: inline-block;
+    min-width: 40px;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: 200ms all;
+    &:hover{
+        background-color: $second;
+    }
+}
+
+
+.center-text {
+    display: block;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.size-input {
+    display: none;
+}
+
+.size-input:checked+label {
+    background-color: $third;
+}
+
+.product-size-container {
+    max-width: 250px;
+}
+
+.description-label {
+    font-size: 8rem;
+}
+
+.size-label {
+    background-color: white;
+    color: $second;
+    padding: 5px 10px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    display: inline-table;
+}
+
+.color-container{
+    max-height: 425px;
+    overflow-y: scroll;
+}

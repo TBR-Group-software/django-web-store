@@ -2,13 +2,94 @@
 {% load static %}
 {% load compress %}
 {% block imports %}
-    {{ block.super }}
+    {% compress css %}
+        <link type="text/x-scss"
+              rel="stylesheet"
+              href="{% static 'scss/product.scss' %}">
+    {% endcompress %}
 {% endblock imports %}
 {% block title %}
     {{ product.name }}
 {% endblock title %}
 {% block content %}
-    <div>
-    Product {{ product.name }}
+    <div class="main-info bg-primary">
+        <div class="container">
+            <div class="row pt-5">
+                <div id="imageCarousel"
+                     class="carousel slide col-5 offset-1"
+                     data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for image in images %}
+                            <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                                <img src="/media/{{ image }}"
+                                     class="d-block w-100"
+                                     alt="{{ product.name }}"
+                                     width="476"
+                                     height="476">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev"
+                            type="button"
+                            data-bs-target="#imageCarousel"
+                            data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next"
+                            type="button"
+                            data-bs-target="#imageCarousel"
+                            data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                <div class="col-1 mt-5 color-container">
+                    {% for color in colors %}
+                        <input type="radio"
+                               name="emotion"
+                               id="{{ color }}"
+                               class="d-none color-input" />
+                        <label for="{{ color }}">
+                            <img src="//placekitten.com/150/150"
+                                 alt="{{ color }}"
+                                 width="85px"
+                                 height="85px" />
+                        </label>
+                    {% endfor %}
+                </div>
+                <div class="col-5 mt-5">
+                    <h1 class="mb-3">{{ product.name }}</h1>
+                    <div class="mb-4">
+                        <span>{{ prodict.short_description }}</span>
+                    </div>
+                    <div class="product-size-container mb-5">
+                        <span class="size-label mb-3">select size</span>
+                        <div class="row">
+                            {% for size in sizes %}
+                                <div class="col-2">
+                                    <input type="radio"
+                                           id="size-{{ size }}"
+                                           name="size"
+                                           class="size-input"
+                                           value="{{ size }}">
+                                    <label for="size-{{ size }}">
+                                        <span class="center-text">{{ size }}</span>
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary me-3">+ add to cart</button>
+                        <span class="fs-2 align-middle">${{ product.price }}</span>
+                    </div>
+                </div>
+            </div>
+            <span class="offset-1 description-label">description.</span>
+        </div>
+    </div>
+    <div class="container">
+        <div class="offset-1 description mt-5">{{ product.description }}</div>
     </div>
 {% endblock content %}
