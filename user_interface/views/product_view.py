@@ -1,27 +1,31 @@
 from django.views import View
-from user_interface.models import Product, ProductImage, ProductParameterValue
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
+
+from user_interface.models import Product, ProductImage, ProductParameterValue
 
 
 class ProductView(View):
-    def get(self, request, product_slug: str):
+    def get(self, request: HttpRequest, product_slug: str) -> HttpResponse:
         product = Product.objects.get(slug=product_slug)
-        parameter_values = ProductParameterValue.objects.filter(product=product)
-        sizes = parameter_values.filter(
-            product_parameter__parameter="size"
-        ).values_list("value", flat=True)
-        colors = parameter_values.filter(
-            product_parameter__parameter="color"
-        ).values_list("value", flat=True)
+        sizes = (
+            ProductParameterValue.objects.filter(
+                product=product, product_parameter__parameter="size"
+            )
+            .order_by("value")
+            .values("value", "stock")
+        )
+
         images = ProductImage.objects.filter(product=product).values_list(
             "image", flat=True
         )
+
         context = {
             "product": product,
             "sizes": sizes,
-            "colors": colors,
             "images": images,
         }
+
         return render(
             request,
             "product.html",

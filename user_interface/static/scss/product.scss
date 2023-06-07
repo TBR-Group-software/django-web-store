@@ -1,16 +1,21 @@
 @import "base.scss";
 
-.color-input:checked+label>img {
-    box-shadow: 0 0 10px 3px $second;
-}
 
-.color-input+label>img {
-    width: 85px;
-    height: 85px;
-    transition: 200ms all;
-    border-radius: 50%;
-    margin-bottom: 15px;
-    cursor: pointer;
+.color-container {
+    a {
+        img {
+            width: 85px;
+            height: 85px;
+            transition: 200ms all;
+            border-radius: 50%;
+            margin: 12px 0;
+            cursor: pointer;
+
+            &:hover {
+                box-shadow: 0 0 10px 3px $second;
+            }
+        }
+    }
 }
 
 .carousel {
@@ -23,7 +28,19 @@
 }
 
 .main-info {
-    max-height: 666px;
+    @include media-breakpoint-up(md) {
+        max-height: 666px;
+    }
+}
+
+.short-description-container {
+    span {
+        height: 30px;
+        display: block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
 }
 
 .size-input+label {
@@ -33,9 +50,18 @@
     cursor: pointer;
     border-radius: 2px;
     transition: 200ms all;
-    &:hover{
-        background-color: $second;
+
+    &:not(.disabled-radio-input) {
+        &:hover {
+            background-color: $second;
+        }
     }
+}
+
+.disabled-radio-input {
+    cursor: default !important;
+    color: #818082;
+
 }
 
 
@@ -58,7 +84,13 @@
 }
 
 .description-label {
-    font-size: 8rem;
+    @include media-breakpoint-up(md) {
+        font-size: 8rem;
+    }
+
+    @include media-breakpoint-down(md) {
+        font-size: 3rem;
+    }
 }
 
 .size-label {
@@ -70,7 +102,7 @@
     display: inline-table;
 }
 
-.color-container{
+.color-container {
     max-height: 425px;
     overflow-y: scroll;
 }
