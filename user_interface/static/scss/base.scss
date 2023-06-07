@@ -18,7 +18,7 @@ $third: #232227;
 body {
     background-color: $second;
     color: white;
-    font-family: 'adineue PRO'!important;
+    font-family: 'adineue PRO' !important;
 }
 
 .modal-dialog {
@@ -48,6 +48,22 @@ body {
     -webkit-box-shadow: 0px 9px 51px 14px rgba($second, 0.47);
     -moz-box-shadow: 0px 9px 51px 14px rgba($second, 0.47);
     box-shadow: 0px 9px 51px 14px rgba($second, 0.47);
+}
+
+.nav-link{
+    color: #fff;
+}
+
+.nav-item-icon{
+    background-color: $second;
+    border-radius: 50px;
+    height: 40px;
+    width: 40px;
+    margin-left: 10px;
+
+    a{
+        text-align: center;
+    }
 }
 
 .btn {
