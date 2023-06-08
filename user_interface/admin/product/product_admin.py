@@ -7,9 +7,10 @@ from user_interface.models import Product
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("name", "price", "short_description", "created_at")
+    list_display = ("name", "price", "short_description", "created_at", "category")
     search_fields = ("name", "price", "short_description")
     filter_horizontal = ("linked_products",)
+    list_filter = ("category",)
 
     def formfield_for_manytomany(
         self, db_field: ManyToManyField, request: HttpRequest, **kwargs

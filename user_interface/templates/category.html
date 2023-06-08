@@ -1,14 +1,47 @@
 {% extends "base.html" %}
 {% load static %}
 {% load compress %}
+{% load get_product_image_url %}
 {% block imports %}
-    {{ block.super }}
+    {% compress css %}
+        <link type="text/x-scss"
+              rel="stylesheet"
+              href="{% static 'scss/category.scss' %}">
+    {% endcompress %}
 {% endblock imports %}
 {% block title %}
     {{ category.name }}
 {% endblock title %}
 {% block content %}
-    <div class="container">
-        <div>Category {{ category.name }}</div>
+    <div class="container-fluid min-vh-100 d-flex flex-column">
+
+    <div class="row flex-grow-1">
+        <div class="filters col-lg-2 bg-dark">
+            Filters
+            <div>Filter by parameter</div>
+        </div>
+        <div class="products col-lg-10">
+            <h1>{{ category.category }}</h1>
+            <div class="product-list-container row">
+                {% for product in products %}
+                    <div class="card col-lg-3 product-card">
+                        <div class="bg-dark rounded-1">
+                            <img src="{{ product.id|get_product_image_url }}"
+                                 class="card-img-top"
+                                 alt="{{ product.name }}"
+                                 width="100%"
+                                 height="auto">
+                            <div class="card-body">
+                                <h5 class="card-title mt-3">{{ product.name }}</h5>
+                                <p class="card-text">{{ product.short_description }}</p>
+                                <a href="{% url 'user_interface:product' product_slug=product.slug %}"
+                                   class="btn btn-second">Order</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
     </div>
 {% endblock content %}

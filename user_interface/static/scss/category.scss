@@ -1,0 +1,15 @@
+@import "base.scss";
+
+.product-card{
+    padding: 0 7px;
+    .card-body{
+        margin: 0 10px;
+        padding: 0 0 20px 0;
+        .card-text{
+            height: 120px;
+        }
+        .btn{
+            width: 100%;
+        }
+    }
+}

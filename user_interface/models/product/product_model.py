@@ -1,6 +1,8 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 
+from .product_category_model import ProductCategory
+
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
@@ -10,6 +12,9 @@ class Product(models.Model):
     slug = models.SlugField(max_length=255, unique=True)
     active = models.BooleanField(default=True)
     linked_products = models.ManyToManyField("self", blank=True)
+    category = models.ForeignKey(
+        ProductCategory, on_delete=models.CASCADE, blank=True, null=True
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

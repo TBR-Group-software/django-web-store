@@ -44,6 +44,10 @@ body {
     background: $primary-gradient;
 }
 
+.bg-dark{
+    background-color: $third;
+}
+
 .navbar-shadow {
     -webkit-box-shadow: 0px 9px 51px 14px rgba($second, 0.47);
     -moz-box-shadow: 0px 9px 51px 14px rgba($second, 0.47);
@@ -88,4 +92,21 @@ body {
     --bs-btn-disabled-color: #fff;
     --bs-btn-disabled-bg: #333235;
     --bs-btn-disabled-border-color: #333235;
+}
+
+.btn-second{
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #fcad72;
+    --bs-btn-border-color: #fcad72;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #ff626d;
+    --bs-btn-hover-border-color: #ff626d;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #ff626d;
+    --bs-btn-active-border-color: #ff626d;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #fcad72;
+    --bs-btn-disabled-border-color: #fcad72;
 }

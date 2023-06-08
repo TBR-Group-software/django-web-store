@@ -7,4 +7,3 @@ from user_interface.models import ProductCategory
 class ProductCategoryAdmin(admin.ModelAdmin):
     list_display = ("category",)
     search_fields = ("category",)
-    filter_horizontal = ("product",)
