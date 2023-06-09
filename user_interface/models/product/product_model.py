@@ -2,6 +2,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 
 from .product_category_model import ProductCategory
+from .product_parameter_model import ProductParameter
 
 
 class Product(models.Model):
@@ -11,6 +12,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
     slug = models.SlugField(max_length=255, unique=True)
     active = models.BooleanField(default=True)
+    linked_parameter = models.ForeignKey(ProductParameter, on_delete=models.CASCADE)
     linked_products = models.ManyToManyField("self", blank=True)
     category = models.ForeignKey(
         ProductCategory, on_delete=models.CASCADE, blank=True, null=True

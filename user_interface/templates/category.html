@@ -10,38 +10,44 @@
     {% endcompress %}
 {% endblock imports %}
 {% block title %}
-    {{ category.name }}
+    {{ category.category }}
 {% endblock title %}
 {% block content %}
     <div class="container-fluid min-vh-100 d-flex flex-column">
-
-    <div class="row flex-grow-1">
-        <div class="filters col-lg-2 bg-dark">
-            Filters
-            <div>Filter by parameter</div>
-        </div>
-        <div class="products col-lg-10">
-            <h1>{{ category.category }}</h1>
-            <div class="product-list-container row">
-                {% for product in products %}
-                    <div class="card col-lg-3 product-card">
-                        <div class="bg-dark rounded-1">
-                            <img src="{{ product.id|get_product_image_url }}"
-                                 class="card-img-top"
-                                 alt="{{ product.name }}"
-                                 width="100%"
-                                 height="auto">
-                            <div class="card-body">
-                                <h5 class="card-title mt-3">{{ product.name }}</h5>
-                                <p class="card-text">{{ product.short_description }}</p>
-                                <a href="{% url 'user_interface:product' product_slug=product.slug %}"
-                                   class="btn btn-second">Order</a>
-                            </div>
-                        </div>
-                    </div>
+        <div class="row flex-grow-1">
+            <div class="filters col-lg-2 bg-dark">
+                <h3>filters</h3>
+                <div>Filter by parameter</div>
+                {% for parameter in parameter_value_filter %}
+                    <p>{{ parameter }}</p>
+                {% endfor %}
+                <div>Filter by attributes</div>
+                {% for attribute in attribute_filters %}
+                    <p>{{ attribute }}</p>
                 {% endfor %}
             </div>
+            <div class="products col-lg-10">
+                <h1>{{ category.category }}</h1>
+                <div class="product-list-container row">
+                    {% for product in products %}
+                        <div class="card col-lg-3 product-card">
+                            <div class="bg-dark rounded-1">
+                                <img src="{{ product.id|get_product_image_url }}"
+                                     class="card-img-top"
+                                     alt="{{ product.name }}"
+                                     width="100%"
+                                     height="auto">
+                                <div class="card-body">
+                                    <h5 class="card-title mt-3">{{ product.name }}</h5>
+                                    <p class="card-text">{{ product.short_description }}</p>
+                                    <a href="{% url 'user_interface:product' product_slug=product.slug %}"
+                                       class="btn btn-second">Order</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-    </div>
     </div>
 {% endblock content %}
