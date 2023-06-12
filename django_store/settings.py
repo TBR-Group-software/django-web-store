@@ -15,6 +15,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 from django.contrib.messages import constants as messages
 
+from easy_thumbnails.conf import Settings as thumbnail_settings
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,6 +43,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "user_interface",
     "compressor",
+    "easy_thumbnails",
+    "image_cropping",
 ]
 
 MIDDLEWARE = [
@@ -161,3 +165,9 @@ MESSAGE_TAGS = {
     messages.WARNING: "alert-warning",
     messages.ERROR: "alert-danger",
 }
+
+# Image cropping
+
+THUMBNAIL_PROCESSORS = (
+    "image_cropping.thumbnail_processors.crop_corners",
+) + thumbnail_settings.THUMBNAIL_PROCESSORS

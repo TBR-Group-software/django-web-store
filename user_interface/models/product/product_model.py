@@ -10,9 +10,11 @@ class Product(models.Model):
     description = models.TextField()
     short_description = models.TextField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    slug = models.SlugField(max_length=255, unique=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     active = models.BooleanField(default=True)
-    linked_parameter = models.ForeignKey(ProductParameter, on_delete=models.CASCADE)
+    linked_parameter = models.ForeignKey(
+        ProductParameter, on_delete=models.CASCADE, blank=True, null=True
+    )
     linked_products = models.ManyToManyField("self", blank=True)
     category = models.ForeignKey(
         ProductCategory, on_delete=models.CASCADE, blank=True, null=True

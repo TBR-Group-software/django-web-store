@@ -2,6 +2,7 @@
 {% load static %}
 {% load compress %}
 {% load get_product_image_url %}
+{% load cropping %}
 {% block imports %}
     {% compress css %}
         <link type="text/x-scss"
@@ -18,13 +19,9 @@
             <div class="filters col-lg-2 bg-dark">
                 <h3>filters</h3>
                 <div>Filter by parameter</div>
-                {% for parameter in parameter_value_filter %}
-                    <p>{{ parameter }}</p>
-                {% endfor %}
+                {% for parameter in parameter_value_filter %}<p>{{ parameter }}</p>{% endfor %}
                 <div>Filter by attributes</div>
-                {% for attribute in attribute_filters %}
-                    <p>{{ attribute }}</p>
-                {% endfor %}
+                {% for attribute in attribute_filters %}<p>{{ attribute }}</p>{% endfor %}
             </div>
             <div class="products col-lg-10">
                 <h1>{{ category.category }}</h1>
@@ -32,7 +29,7 @@
                     {% for product in products %}
                         <div class="card col-lg-3 product-card">
                             <div class="bg-dark rounded-1">
-                                <img src="{{ product.id|get_product_image_url }}"
+                                <img src="{% cropped_thumbnail product.id|get_product_image_url 'cropping' %}"
                                      class="card-img-top"
                                      alt="{{ product.name }}"
                                      width="100%"

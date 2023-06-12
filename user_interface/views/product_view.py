@@ -16,10 +16,7 @@ class ProductView(View):
             .values("value", "stock")
         )
 
-        images = ProductImage.objects.filter(product=product).values_list(
-            "image", flat=True
-        )
-
+        images = ProductImage.objects.filter(product=product)
         context = {
             "product": product,
             "sizes": sizes,

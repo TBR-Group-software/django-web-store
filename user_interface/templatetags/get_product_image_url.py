@@ -7,12 +7,10 @@ register = template.Library()
 
 
 @register.filter
-def get_product_image_url(product_id: int) -> str:
+def get_product_image_url(product_id: int) -> ProductImage | str:
     """Return url of main image of product."""
     try:
-        main_image = ProductImage.objects.get(
-            product__id=product_id, image_type="MAIN"
-        ).image
+        main_image = ProductImage.objects.get(product__id=product_id, image_type="MAIN")
     except ProductImage.DoesNotExist:
         return static("img/product/none_image.jpg")
-    return main_image.url
+    return main_image
