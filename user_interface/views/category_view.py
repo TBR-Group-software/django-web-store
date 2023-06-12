@@ -76,8 +76,7 @@ class ProductCategoryView(View):
         ]
 
     def filter_products(self, products, filters):
-        filtred_product_parameters_ids = []
-        filtred_product_attribute_ids = []
+        filtred_product_ids = []
         parameter_product_filtred = ProductParameterValue.objects.filter(
             product__in=products
         )
@@ -85,20 +84,23 @@ class ProductCategoryView(View):
             product__in=products
         )
         for filter_key in filters.keys():
-            filtred_product_parameters_ids.extend(
-                parameter_product_filtred.filter(
-                    product_parameter__parameter=filter_key,
-                    value__in=filters[filter_key],
-                ).values_list("product__id", flat=True)
-            )
-            filtred_product_attribute_ids.extend(
-                product_attribute_filterd.filter(
-                    product_parameter__parameter=filter_key,
-                    value__in=filters[filter_key],
-                ).values_list("product__id", flat=True)
-            )
+            filterd_parameters = parameter_product_filtred.filter(
+                product_parameter__parameter=filter_key,
+                value__in=filters[filter_key],
+            ).values_list("product__id", flat=True)
+            if len(filterd_parameters) > 0:
+                filtred_product_ids.append(filterd_parameters)
 
-        return products.filter(
-            id__in=set(filtred_product_parameters_ids)
-            & set(filtred_product_attribute_ids)
-        )
+            filtred_attributes = product_attribute_filterd.filter(
+                product_parameter__parameter=filter_key,
+                value__in=filters[filter_key],
+            ).values_list("product__id", flat=True)
+            if len(filtred_attributes) > 0:
+                filtred_product_ids.append(filtred_attributes)
+
+        filterd_product = set(filtred_product_ids[0])
+
+        for sublist in filtred_product_ids[1:]:
+            filterd_product = filterd_product.intersection(sublist)
+
+        return products.filter(id__in=filterd_product)
