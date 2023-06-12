@@ -3,6 +3,7 @@ from django.template.defaultfilters import slugify
 
 from .product_category_model import ProductCategory
 from .product_parameter_model import ProductParameter
+from .product_attribute_model import ProductAttribute
 
 
 class Product(models.Model):
@@ -19,6 +20,7 @@ class Product(models.Model):
     category = models.ForeignKey(
         ProductCategory, on_delete=models.CASCADE, blank=True, null=True
     )
+    product_attributes = models.ManyToManyField(ProductAttribute, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
