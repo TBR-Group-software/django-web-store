@@ -44,7 +44,7 @@ body {
     background: $primary-gradient;
 }
 
-.bg-dark{
+.bg-dark {
     background-color: $third;
 }
 
@@ -54,18 +54,18 @@ body {
     box-shadow: 0px 9px 51px 14px rgba($second, 0.47);
 }
 
-.nav-link{
+.nav-link {
     color: #fff;
 }
 
-.nav-item-icon{
+.nav-item-icon {
     background-color: $second;
     border-radius: 50px;
     height: 40px;
     width: 40px;
     margin-left: 10px;
 
-    a{
+    a {
         text-align: center;
     }
 }
@@ -94,7 +94,7 @@ body {
     --bs-btn-disabled-border-color: #333235;
 }
 
-.btn-second{
+.btn-second {
     --bs-btn-color: #fff;
     --bs-btn-bg: #fcad72;
     --bs-btn-border-color: #fcad72;
@@ -111,9 +111,10 @@ body {
     --bs-btn-disabled-border-color: #fcad72;
 }
 
-.list-group-dark{
+.list-group-dark {
     border: none;
-    .list-group-item{
+
+    .list-group-item {
         background: transparent;
         color: #fff;
         border: none;
@@ -140,9 +141,9 @@ input[type="checkbox"] {
 
     display: grid;
     place-content: center;
-  }
+}
 
-  input[type="checkbox"]::before {
+input[type="checkbox"]::before {
     content: "";
     width: 0.65em;
     height: 0.65em;
@@ -153,15 +154,21 @@ input[type="checkbox"] {
     box-shadow: inset 1em 1em var(--form-control-color);
     /* Windows High Contrast Mode */
     background-color: #fff;
-  }
+}
 
-  input[type="checkbox"]:checked::before {
+input[type="checkbox"]:checked::before {
     transform: scale(1);
-  }
+}
 
-  input[type="checkbox"]:disabled {
+input[type="checkbox"]:disabled {
     --form-control-color: var(--form-control-disabled);
 
     color: var(--form-control-disabled);
     cursor: not-allowed;
-  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

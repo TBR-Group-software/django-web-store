@@ -12,10 +12,12 @@ from user_interface.models import (
 
 
 class ProductCategoryView(View):
+    DEFAULT_FILTERS = ["minPrice", "maxPrice", "stock"]
+
     def get(self, request: HttpRequest, category_slug: str) -> HttpResponse:
         filters = dict(request.GET)
         category = ProductCategory.objects.get(slug=category_slug)
-        products = Product.objects.filter(category=category, active=True)
+        products = Product.objects.filter(category=category)
 
         context = self._get_product_context(category, products, filters)
         if len(filters) > 0:
@@ -39,7 +41,42 @@ class ProductCategoryView(View):
 
         filters = self._set_filters_checked(active_filters, parameter_value_filter)
 
-        return {"category": category, "filters": filters}
+        min_price, max_price = self._get_price_filter_values(active_filters)
+        in_stock, out_of_stock = self._get_stock_values(active_filters)
+
+        return {
+            "category_name": category.category,
+            "page_title": category.category,
+            "filters": filters,
+            "min_price": min_price,
+            "max_price": max_price,
+            "in_stock": in_stock,
+            "out_of_stock": out_of_stock,
+        }
+
+    def _get_price_filter_values(self, filters: dict) -> tuple:
+        min_price = None
+        max_price = None
+
+        if filters.get("minPrice"):
+            min_price = int(filters["minPrice"][0])
+
+        if filters.get("maxPrice"):
+            max_price = int(filters["maxPrice"][0])
+
+        return min_price, max_price
+
+    def _get_stock_values(self, filters: dict) -> tuple:
+        in_stock = False
+        out_of_stock = False
+
+        if filters.get("stock"):
+            if "in-stock" in filters["stock"]:
+                in_stock = True
+            if "out-of-stock" in filters["stock"]:
+                out_of_stock = True
+
+        return in_stock, out_of_stock
 
     def _get_parameter_values(self, products: QuerySet[Product]) -> dict:
         product_parameter_values = ProductParameterValue.objects.filter(
@@ -82,6 +119,8 @@ class ProductCategoryView(View):
 
     def _set_filters_checked(self, active_filters: dict, all_filters: dict) -> dict:
         for filter_key, active_filter_value in active_filters.items():
+            if filter_key in self.DEFAULT_FILTERS:
+                continue
             if active_filter_value:
                 for all_filter_value in all_filters[filter_key]:
                     if all_filter_value["value"] in active_filter_value:
@@ -92,7 +131,6 @@ class ProductCategoryView(View):
     def filter_products(
         self, products: QuerySet[Product], filters: dict
     ) -> QuerySet[Product]:
-        filtred_product_ids = []
         parameter_product_filtred = ProductParameterValue.objects.filter(
             product__in=products
         )
@@ -100,21 +138,41 @@ class ProductCategoryView(View):
             product__in=products
         )
         for filter_key in filters.keys():
-            filterd_parameters = parameter_product_filtred.filter(
-                product_parameter__parameter=filter_key, value__in=filters[filter_key]
-            ).values_list("product__id", flat=True)
-            if filterd_parameters:
-                filtred_product_ids.append(filterd_parameters)
+            filtred_product_ids = []
+            if filter_key == "minPrice" or filter_key == "maxPrice":
+                value = int(filters[filter_key][0])
+                if filter_key == "minPrice":
+                    filtred_product_ids.append(
+                        products.filter(price__gte=value).values_list("id", flat=True)
+                    )
+                else:
+                    filtred_product_ids.append(
+                        products.filter(price__lte=value).values_list("id", flat=True)
+                    )
+            elif filter_key == "stock":
+                values = filters[filter_key]
+                if len(values) >= 2:
+                    continue
+                value = True if filters[filter_key][0] == "in-stock" else False
+                filtred_product_ids.append(
+                    products.filter(in_stock=value).values_list("id", flat=True)
+                )
+            else:
+                filterd_parameters = parameter_product_filtred.filter(
+                    product_parameter__parameter=filter_key,
+                    value__in=filters[filter_key],
+                ).values_list("product__id", flat=True)
+                if filterd_parameters:
+                    filtred_product_ids.append(filterd_parameters)
 
-            filtred_attributes = product_attribute_filtered.filter(
-                product_parameter__parameter=filter_key, value__in=filters[filter_key]
-            ).values_list("product__id", flat=True)
-            if filtred_attributes:
-                filtred_product_ids.append(filtred_attributes)
+                filtred_attributes = product_attribute_filtered.filter(
+                    product_parameter__parameter=filter_key,
+                    value__in=filters[filter_key],
+                ).values_list("product__id", flat=True)
+                if filtred_attributes:
+                    filtred_product_ids.append(filtred_attributes)
 
-        filtered_product = set(filtred_product_ids[0])
+            if len(filtred_product_ids) > 0:
+                products = products.filter(id__in=filtred_product_ids)
 
-        for sublist in filtred_product_ids[1:]:
-            filtered_product = filtered_product.intersection(sublist)
-
-        return products.filter(id__in=filtered_product)
+        return products

@@ -1,15 +1,49 @@
 @import "base.scss";
 
-.product-card{
-    padding: 0 7px;
-    .card-body{
-        margin: 0 10px;
-        padding: 0 0 20px 0;
-        .card-text{
-            height: 120px;
-        }
-        .btn{
-            width: 100%;
-        }
+.product-card {
+  padding: 0 7px;
+
+  .card-body {
+    margin: 0 10px;
+    padding: 0 0 20px 0;
+
+    .card-text {
+      height: 120px;
     }
+
+    .btn {
+      width: 100%;
+    }
+  }
+}
+
+.price-filter {
+  h4 {
+    margin-top: 0;
+  }
+
+  .price-range {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    input {
+      width: auto;
+      max-width: 100%;
+      padding: 10px 30px;
+      border-radius: 20px;
+      border: none !important;
+      background-color: $second;
+      color: #fff;
+    }
+
+    span {
+      margin: 0 10px;
+    }
+  }
+
+  button {
+    display: block;
+    margin: 0 auto;
+  }
 }

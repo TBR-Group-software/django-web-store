@@ -17,7 +17,7 @@ function createAlert(type, message) {
     const closeButton = createCloseButton();
     alert.appendChild(closeButton);
 
-    const container = document.querySelector('.container');
+    const container = document.querySelector('.content');
     container.prepend(alert);
 
     closeAlert();
@@ -27,4 +27,12 @@ function createAlert(type, message) {
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function createCloseButton() {
+    const closeButton = document.createElement('button');
+    closeButton.classList.add('btn-close');
+    closeButton.setAttribute('type', 'button');
+    closeButton.setAttribute('data-bs-dismiss', 'alert');
+    return closeButton;
 }

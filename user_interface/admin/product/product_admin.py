@@ -14,12 +14,12 @@ class ProductAdmin(admin.ModelAdmin):
         "created_at",
         "category",
         "linked_parameter",
-        "active",
+        "in_stock",
     )
     search_fields = ("name", "price", "short_description")
     filter_horizontal = ("linked_products", "product_attributes")
     list_filter = ("category", "linked_parameter")
-    list_editable = ("active",)
+    list_editable = ("in_stock",)
 
     def formfield_for_manytomany(
         self, db_field: ManyToManyField, request: HttpRequest, **kwargs

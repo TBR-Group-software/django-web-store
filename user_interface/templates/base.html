@@ -21,10 +21,10 @@
                       rel="stylesheet"
                       href="{% static 'scss/base.scss' %}">
             {% endcompress %}
-            {% compress js %}
-                <script src="{% static 'js/base.js' %}"></script>
-            {% endcompress %}
         {% endblock imports %}
+        {% compress js %}
+            <script src="{% static 'js/base.js' %}"></script>
+        {% endcompress %}
         <title>
             {% block title %}
                 Web Store
@@ -83,8 +83,10 @@
                 integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
                 crossorigin="anonymous"></script>
         {% include "includes/messages.html" %}
-        {% block content %}
-            Web Store
-        {% endblock content %}
+        <div class="content">
+            {% block content %}
+                Web Store
+            {% endblock content %}
+        </div>
     </body>
 </html>
