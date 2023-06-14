@@ -15,6 +15,7 @@ from user_interface.models import (
 
 class ProductCategoryView(View):
     DEFAULT_PARAMETERS = ["minPrice", "maxPrice", "stock", "sort"]
+    DEFAULT_SORT = "-in_stock"
 
     class SortType(Enum):
         """Category sort types."""
@@ -27,7 +28,7 @@ class ProductCategoryView(View):
     def get(self, request: HttpRequest, category_slug: str) -> HttpResponse:
         query_parameters = dict(request.GET)
         category = ProductCategory.objects.get(slug=category_slug)
-        products = Product.objects.filter(category=category).order_by("-in_stock")
+        products = Product.objects.filter(category=category)
 
         if query_parameters.get("sort"):
             products = self._sort_products(products, query_parameters["sort"][0])
@@ -147,13 +148,13 @@ class ProductCategoryView(View):
     ) -> QuerySet[Product]:
         match sort_type:
             case self.SortType.OLDER.value:
-                products = products.order_by("created_at")
+                products = products.order_by(self.DEFAULT_SORT, "created_at")
             case self.SortType.NEWER.value:
-                products = products.order_by("-created_at")
+                products = products.order_by(self.DEFAULT_SORT, "-created_at")
             case self.SortType.CHEAPER.value:
-                products = products.order_by("price")
+                products = products.order_by(self.DEFAULT_SORT, "price")
             case self.SortType.EXPENSIVE.value:
-                products = products.order_by("-price")
+                products = products.order_by(self.DEFAULT_SORT, "-price")
             case _:
                 pass
 
