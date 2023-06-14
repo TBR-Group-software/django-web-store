@@ -1,3 +1,5 @@
+from enum import Enum
+
 from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
@@ -12,16 +14,27 @@ from user_interface.models import (
 
 
 class ProductCategoryView(View):
-    DEFAULT_FILTERS = ["minPrice", "maxPrice", "stock"]
+    DEFAULT_PARAMETERS = ["minPrice", "maxPrice", "stock", "sort"]
+
+    class SortType(Enum):
+        """Category sort types."""
+
+        OLDER = "older"
+        NEWER = "newer"
+        CHEAPER = "cheaper"
+        EXPENSIVE = "expensive"
 
     def get(self, request: HttpRequest, category_slug: str) -> HttpResponse:
-        filters = dict(request.GET)
+        query_parameters = dict(request.GET)
         category = ProductCategory.objects.get(slug=category_slug)
-        products = Product.objects.filter(category=category)
+        products = Product.objects.filter(category=category).order_by("-in_stock")
 
-        context = self._get_product_context(category, products, filters)
-        if len(filters) > 0:
-            filtred_products = self.filter_products(products, filters)
+        if query_parameters.get("sort"):
+            products = self._sort_products(products, query_parameters["sort"][0])
+
+        context = self._get_product_context(category, products, query_parameters)
+        if len(query_parameters) > 0:
+            filtred_products = self.filter_products(products, query_parameters)
         else:
             filtred_products = products
         context["products"] = filtred_products
@@ -52,6 +65,7 @@ class ProductCategoryView(View):
             "max_price": max_price,
             "in_stock": in_stock,
             "out_of_stock": out_of_stock,
+            "sort_types": [type.value for type in self.SortType],
         }
 
     def _get_price_filter_values(self, filters: dict) -> tuple:
@@ -119,7 +133,7 @@ class ProductCategoryView(View):
 
     def _set_filters_checked(self, active_filters: dict, all_filters: dict) -> dict:
         for filter_key, active_filter_value in active_filters.items():
-            if filter_key in self.DEFAULT_FILTERS:
+            if filter_key in self.DEFAULT_PARAMETERS:
                 continue
             if active_filter_value:
                 for all_filter_value in all_filters[filter_key]:
@@ -127,6 +141,23 @@ class ProductCategoryView(View):
                         all_filter_value["checked"] = True
 
         return all_filters
+
+    def _sort_products(
+        self, products: QuerySet[Product], sort_type: str
+    ) -> QuerySet[Product]:
+        match sort_type:
+            case self.SortType.OLDER.value:
+                products = products.order_by("created_at")
+            case self.SortType.NEWER.value:
+                products = products.order_by("-created_at")
+            case self.SortType.CHEAPER.value:
+                products = products.order_by("price")
+            case self.SortType.EXPENSIVE.value:
+                products = products.order_by("-price")
+            case _:
+                pass
+
+        return products
 
     def filter_products(
         self, products: QuerySet[Product], filters: dict
@@ -138,6 +169,8 @@ class ProductCategoryView(View):
             product__in=products
         )
         for filter_key in filters.keys():
+            if filter_key == "sort":
+                continue
             filtred_product_ids = []
             if filter_key == "minPrice" or filter_key == "maxPrice":
                 value = int(filters[filter_key][0])

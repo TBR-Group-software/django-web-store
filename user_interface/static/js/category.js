@@ -108,4 +108,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
     });
+
+    const sortSelect = document.getElementById('sortSelect');
+    sortSelect.addEventListener('change', function () {
+        const sortValue = sortSelect.value;
+        let newUrl = hardDeleteFilter('sort', null, false);
+        addFilter('sort', sortValue, newUrl, true);
+    });
 });
