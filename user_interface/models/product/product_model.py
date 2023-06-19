@@ -1,9 +1,11 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.contrib.contenttypes.fields import GenericRelation
 
 from .product_category_model import ProductCategory
 from .product_parameter_model import ProductParameter
 from .product_attribute_model import ProductAttribute
+from .product_image_model import ProductImage
 
 
 class Product(models.Model):
@@ -21,6 +23,7 @@ class Product(models.Model):
         ProductCategory, on_delete=models.CASCADE, blank=True, null=True
     )
     product_attributes = models.ManyToManyField(ProductAttribute, blank=True)
+    images = GenericRelation(ProductImage)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

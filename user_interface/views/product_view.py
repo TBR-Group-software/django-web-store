@@ -16,7 +16,7 @@ class ProductView(View):
             .values("value", "stock")
         )
 
-        images = ProductImage.objects.filter(product=product)
+        images = ProductImage.objects.filter(object_id=product.pk)
         context = {
             "product": product,
             "sizes": sizes,

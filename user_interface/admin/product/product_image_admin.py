@@ -8,10 +8,8 @@ from user_interface.models import ProductImage
 
 @admin.register(ProductImage)
 class ProductImageAdmin(ImageCroppingMixin, admin.ModelAdmin):
-    list_display = ("product", "image_type", "image_tag")
-    search_fields = ("product",)
-    list_filter = ("image_type",)
-    fields = ("image_tag",)
+    list_display = ("image_type", "image_tag", "content_type")
+    list_filter = ("image_type", "content_type")
     readonly_fields = ("image_tag",)
 
     def image_tag(self, obj):
