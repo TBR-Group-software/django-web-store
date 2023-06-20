@@ -10,13 +10,15 @@ class ProductView(View):
         product = Product.objects.get(slug=product_slug)
         sizes = (
             ProductParameterValue.objects.filter(
-                product=product, product_parameter__parameter="size"
+                product=product, product_parameter__parameter="Size"
             )
             .order_by("value")
             .values("value", "stock")
         )
 
-        images = ProductImage.objects.filter(object_id=product.pk)
+        images = ProductImage.objects.filter(
+            object_id=product.pk, content_type__model="product"
+        )
         context = {
             "product": product,
             "sizes": sizes,

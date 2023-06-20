@@ -10,7 +10,7 @@ class ProductParameterValue(models.Model):
     stock = models.PositiveIntegerField(blank=False, null=False, default=0)
 
     def __str__(self):
-        return self.product.name
+        return f"{self.product.name} {self.product_parameter.parameter} {self.value}"
 
     class Meta:
         """Meta for unique_together."""

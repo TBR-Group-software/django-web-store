@@ -1,19 +1,20 @@
 @import "custom";
 
-@import url(//db.onlinewebfonts.com/c/b82329475307e0380dc1ea23f0c35266?family=adineue+PRO);
-
-@font-face {
-    font-family: "adineue PRO";
-    src: url("//db.onlinewebfonts.com/t/b82329475307e0380dc1ea23f0c35266.eot");
-    src: url("//db.onlinewebfonts.com/t/b82329475307e0380dc1ea23f0c35266.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/b82329475307e0380dc1ea23f0c35266.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/b82329475307e0380dc1ea23f0c35266.woff") format("woff"), url("//db.onlinewebfonts.com/t/b82329475307e0380dc1ea23f0c35266.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/b82329475307e0380dc1ea23f0c35266.svg#adineue PRO") format("svg");
-}
-
 $primary: #ff626d;
 $primary-second: #fcad72;
 $primary-gradient: linear-gradient(32deg, #ff626d 0%, #fcad72 100%);
 
 $second: #333235;
 $third: #232227;
+
+@font-face {font-family: "adineue PRO";
+    src: url("../fonts/adineue_PRO.eot"); /* IE9*/
+    src: url("../fonts/adineue_PRO.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("../fonts/adineue_PRO.woff2") format("woff2"), /* chrome firefox */
+    url("../fonts/adineue_PRO.woff") format("woff"), /* chrome firefox */
+    url("../fonts/adineue_PRO.ttf") format("truetype"), /* chrome firefox opera Safari, Android, iOS 4.2+*/
+    url("../fonts/adineue_PRO.svg#adineue PRO") format("svg"); /* iOS 4.1- */
+}
 
 body {
     background-color: $second;
@@ -122,13 +123,9 @@ body {
 }
 
 input[type="checkbox"] {
-    /* Add if not using autoprefixer */
     -webkit-appearance: none;
-    /* Remove most all native input styles */
     appearance: none;
-    /* For iOS < 15 */
     background-color: var(--form-background);
-    /* Not removed via appearance */
     margin: 0;
 
     font: inherit;
@@ -152,7 +149,6 @@ input[type="checkbox"]::before {
     transform-origin: bottom left;
     transition: 120ms transform ease-in-out;
     box-shadow: inset 1em 1em var(--form-control-color);
-    /* Windows High Contrast Mode */
     background-color: #fff;
 }
 
@@ -173,9 +169,18 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-.select-dark{
+.select-dark {
     border: none;
     border-radius: 20px;
     background-color: $third;
     color: #fff;
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>")
+}
+
+.nav-bar-middle {
+    .nav-link {
+        font-size: 20px;
+        padding-right: 30px !important;
+        padding-left: 30px !important;
+    }
 }

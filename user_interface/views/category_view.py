@@ -28,7 +28,7 @@ class ProductCategoryView(View):
     def get(self, request: HttpRequest, category_slug: str) -> HttpResponse:
         query_parameters = dict(request.GET)
         category = ProductCategory.objects.get(slug=category_slug)
-        products = Product.objects.filter(category=category)
+        products = Product.objects.filter(category=category).order_by(self.DEFAULT_SORT)
 
         if query_parameters.get("sort"):
             products = self._sort_products(products, query_parameters["sort"][0])

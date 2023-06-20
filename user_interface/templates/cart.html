@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+{% load cropping %}
+{% load get_product_image_url %}
+{% block title %}
+    {{ page_title }}
+{% endblock title %}
+{% block imports %}
+    {% compress css %}
+        <link type="text/x-scss"
+              rel="stylesheet"
+              href="{% static 'scss/cart.scss' %}">
+    {% endcompress %}
+{% endblock imports %}
+{% block content %}
+    <div class="container row mt-4">
+        {% for parameter_value in cart.products.all %}
+            <div class="card col-lg-3 product-card mb-3">
+                <div class="bg-dark rounded-1">
+                    <img src="{% cropped_thumbnail parameter_value.product.id|get_product_image_url 'cropping' %}"
+                         class="card-img-top"
+                         alt="{{ parameter_value.product.name }}"
+                         width="100%"
+                         height="auto">
+                    <div class="card-body position-relative">
+                        <h5 class="card-title mt-3">{{ parameter_value.product.name }}</h5>
+                        <p class="card-text">{{ parameter_value.product.short_description }}</p>
+                        <h4 class="price">${{ parameter_value.product.price|stringformat:".0f" }}</h4>
+                        <a href="{% url 'user_interface:product' product_slug=parameter_value.product.slug %}"
+                           class="btn {% if parameter_value.product.in_stock %}btn-second{% else %}btn-primary{% endif %} position-absolute mb-3 bottom-0 start-0">
+                            {% if parameter_value.product.in_stock %}
+                                Order
+                            {% else %}
+                                View
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
