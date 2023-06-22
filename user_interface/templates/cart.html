@@ -12,32 +12,65 @@
               rel="stylesheet"
               href="{% static 'scss/cart.scss' %}">
     {% endcompress %}
+    {% compress js %}
+        <script src="{% static 'js/cart.js' %}"></script>
+    {% endcompress %}
 {% endblock imports %}
 {% block content %}
-    <div class="container row mt-4">
-        {% for parameter_value in cart.products.all %}
-            <div class="card col-lg-3 product-card mb-3">
-                <div class="bg-dark rounded-1">
-                    <img src="{% cropped_thumbnail parameter_value.product.id|get_product_image_url 'cropping' %}"
-                         class="card-img-top"
-                         alt="{{ parameter_value.product.name }}"
-                         width="100%"
-                         height="auto">
-                    <div class="card-body position-relative">
-                        <h5 class="card-title mt-3">{{ parameter_value.product.name }}</h5>
-                        <p class="card-text">{{ parameter_value.product.short_description }}</p>
-                        <h4 class="price">${{ parameter_value.product.price|stringformat:".0f" }}</h4>
-                        <a href="{% url 'user_interface:product' product_slug=parameter_value.product.slug %}"
-                           class="btn {% if parameter_value.product.in_stock %}btn-second{% else %}btn-primary{% endif %} position-absolute mb-3 bottom-0 start-0">
-                            {% if parameter_value.product.in_stock %}
-                                Order
-                            {% else %}
-                                View
-                            {% endif %}
-                        </a>
+    <div class="container mt-4">
+        <h1 class="mb-3">your shopping cart.</h1>
+        {% for cart_parameter in cart.products.all %}
+            <div class="cart-item mb-3">
+                <input type="hidden" name="cart-ammount-id" value="{{ cart_parameter.id }}">
+                <div class="bg-dark rounded-1 d-flex w-100 h-100">
+                    <img src="{% cropped_thumbnail cart_parameter.product_parameter.product.id|get_product_image_url 'cropping' %}"
+                         alt="{{ cart_parameter.product_parameter.product.name }}"
+                         width="10%"
+                         height="auto"
+                         class="rounded-1">
+                    <div class="row w-100 ms-2">
+                        <div class="col h-100 d-flex">
+                            <div class="my-auto">
+                                <a class="link-primary"
+                                   href="{% url 'user_interface:product' product_slug=cart_parameter.product_parameter.product.slug %}">{{ cart_parameter.product_parameter.product.name }}</a>
+                            </div>
+                        </div>
+                        <div class="col h-100 d-flex">
+                            <div class="my-auto">
+                                <span class="text-second">SIZE</span><span class="ms-1">{{ cart_parameter.product_parameter.value }}</span>
+                            </div>
+                        </div>
+                        <div class="col h-100 d-flex">
+                            <div class="my-auto">
+                                <button type="button" class="btn btn-second btn-rounded minus-item">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+                                <span class="mx-2 product-ammount">{{ cart_parameter.ammount }}</span>
+                                <button type="button" class="btn btn-second btn-rounded plus-item">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col h-100 d-flex">
+                            <div class="my-auto">
+                                <input type="hidden"
+                                       name="default-product-price"
+                                       value="{{ cart_parameter.product_parameter.product.price }}">
+                                <span class="text-second text-uppercase">pricing</span><span class="ms-1">$</span><span class="product-price">{% widthratio cart_parameter.product_parameter.product.price 1 cart_parameter.ammount %}</span>
+                            </div>
+                        </div>
+                        <div class="col my-auto">
+                            <button type="button" class="btn-close float-end me-4" aria-label="Close"></button>
+                        </div>
                     </div>
                 </div>
             </div>
         {% endfor %}
+        <div class="bottom-cart mt-4">
+            <a class="link-primary" href="{% url 'user_interface:index' %}"><i class="fa-solid fa-chevron-left"></i><span class="ms-3">back to store.</span></a>
+            <div class="float-end">
+                <span class="text-second text-uppercase">subtotal:</span><span class="ms-1">$</span><span class="subtotal">{{ total_price }}</span>
+            </div>
+        </div>
     </div>
 {% endblock content %}

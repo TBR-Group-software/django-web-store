@@ -32,7 +32,7 @@ function addToCart() {
 
         const postJSON = JSON.stringify({ "product_parameter_value": getSelectedSize(), 'product_slug': slug});
 
-        xhttp.open("POST", `/add_to_cart/`, true);
+        xhttp.open("POST", `/edit_cart/`, true);
         xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
         xhttp.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
         xhttp.send(postJSON);

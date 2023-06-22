@@ -7,6 +7,17 @@ from user_interface.models import Cart
 
 class CarttView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
-        cart = Cart.objects.get(user=request.user)
-        print(cart.products.all())
-        return render(request, "cart.html", {"cart": cart})
+        cart, _ = Cart.objects.get_or_create(user=request.user)
+        total_price = self.calculate_total_price_of_cart(cart)
+        return render(
+            request,
+            "cart.html",
+            {"cart": cart, "total_price": total_price, "page_title": "Cart"},
+        )
+
+    def calculate_total_price_of_cart(self, cart: Cart) -> int:
+        total_price = 0
+        for item in cart.products.all():
+            total_price += item.product_parameter.product.price * item.ammount
+
+        return int(total_price)
