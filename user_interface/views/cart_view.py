@@ -18,6 +18,6 @@ class CarttView(View):
     def calculate_total_price_of_cart(self, cart: Cart) -> int:
         total_price = 0
         for item in cart.products.all():
-            total_price += item.product_parameter.product.price * item.ammount
+            total_price += item.product_parameter.product.price * item.amount
 
         return int(total_price)

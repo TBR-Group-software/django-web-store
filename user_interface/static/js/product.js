@@ -30,7 +30,7 @@ function addToCart() {
 
         const slug = new URL(document.URL).pathname.split('/').pop();
 
-        const postJSON = JSON.stringify({ "product_parameter_value": getSelectedSize(), 'product_slug': slug});
+        const postJSON = JSON.stringify({ "product_parameter_value": getSelectedSize(), 'product_slug': slug, "operation_type": "add_product" });
 
         xhttp.open("POST", `/edit_cart/`, true);
         xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');

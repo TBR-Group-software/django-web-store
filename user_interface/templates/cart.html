@@ -20,8 +20,8 @@
     <div class="container mt-4">
         <h1 class="mb-3">your shopping cart.</h1>
         {% for cart_parameter in cart.products.all %}
-            <div class="cart-item mb-3">
-                <input type="hidden" name="cart-ammount-id" value="{{ cart_parameter.id }}">
+            <div class="product-container mb-3">
+                <input type="hidden" name="cart-amount-id" value="{{ cart_parameter.id }}">
                 <div class="bg-dark rounded-1 d-flex w-100 h-100">
                     <img src="{% cropped_thumbnail cart_parameter.product_parameter.product.id|get_product_image_url 'cropping' %}"
                          alt="{{ cart_parameter.product_parameter.product.name }}"
@@ -45,7 +45,7 @@
                                 <button type="button" class="btn btn-second btn-rounded minus-item">
                                     <i class="fa-solid fa-minus"></i>
                                 </button>
-                                <span class="mx-2 product-ammount">{{ cart_parameter.ammount }}</span>
+                                <span class="mx-2 product-amount">{{ cart_parameter.amount }}</span>
                                 <button type="button" class="btn btn-second btn-rounded plus-item">
                                     <i class="fa-solid fa-plus"></i>
                                 </button>
@@ -56,11 +56,11 @@
                                 <input type="hidden"
                                        name="default-product-price"
                                        value="{{ cart_parameter.product_parameter.product.price }}">
-                                <span class="text-second text-uppercase">pricing</span><span class="ms-1">$</span><span class="product-price">{% widthratio cart_parameter.product_parameter.product.price 1 cart_parameter.ammount %}</span>
+                                <span class="text-second text-uppercase">pricing</span><span class="ms-1">$</span><span class="product-price">{% widthratio cart_parameter.product_parameter.product.price 1 cart_parameter.amount %}</span>
                             </div>
                         </div>
                         <div class="col my-auto">
-                            <button type="button" class="btn-close float-end me-4" aria-label="Close"></button>
+                            <button type="button" class="btn-close float-end remove-item me-4" aria-label="Close"></button>
                         </div>
                     </div>
                 </div>
