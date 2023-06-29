@@ -25,4 +25,7 @@ urlpatterns = [
         "",
         include(("user_interface.urls", "user_interface"), namespace="user_interface"),
     ),
+    path("product/", include(("product.urls", "product"), namespace="product")),
+    path("category/", include(("category.urls", "category"), namespace="category")),
+    path("cart/", include(("cart.urls", "cart"), namespace="cart")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

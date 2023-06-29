@@ -1,7 +1,7 @@
 from django import template
 from django.templatetags.static import static
 
-from user_interface.models import ProductImage
+from product.models import ProductImage
 
 
 register = template.Library()
