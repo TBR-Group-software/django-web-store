@@ -8,4 +8,8 @@ from product.models import ProductCategory
 class CategoryListView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         categories = ProductCategory.objects.all()
-        return render(request, "category_list.html", {"categories": categories})
+        return render(
+            request,
+            "category_list.html",
+            {"categories": categories, "page_title": "Categories"},
+        )

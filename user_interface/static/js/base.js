@@ -47,3 +47,46 @@ const getCookie = function (cName) {
     });
     return res;
 }
+
+
+function changeCartItemCount(ItemCount) {
+    const cartItemLinkElement = document.querySelector('.cart-link');
+
+    let cartItemCountElement = cartItemLinkElement.querySelector('.item-cart-count');
+
+    if (ItemCount <= 0) {
+        if (cartItemCountElement) {
+            cartItemCountElement.remove()
+        }
+        return ItemCount
+    }
+
+    if (cartItemCountElement) {
+        cartItemCountElement.innerHTML = ItemCount;
+        return cartItemCountElement
+    }
+    else {
+        const newCartItemCountElement = document.createElement('i');
+
+        newCartItemCountElement.classList.add('item-cart-count', 'position-absolute');
+        newCartItemCountElement.innerHTML = ItemCount;
+        cartItemLinkElement.appendChild(newCartItemCountElement);
+        return newCartItemCountElement;
+    }
+}
+
+function getCartItemCount() {
+    let cartItemCountElement = document.querySelector('.item-cart-count');
+    if (cartItemCountElement) {
+        return parseInt(cartItemCountElement.innerHTML)
+    }
+    return 0
+}
+
+function addCartItemCount() {
+    return changeCartItemCount(getCartItemCount() + 1);
+}
+
+function minusCartItemCount() {
+    return changeCartItemCount(getCartItemCount() - 1);
+}

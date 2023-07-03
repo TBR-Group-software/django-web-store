@@ -25,6 +25,7 @@ function addToCart() {
                 return false
             }
             createAlert('primary', "Product added to cart !");
+            addCartItemCount()
             return true
         }
 
@@ -32,7 +33,7 @@ function addToCart() {
 
         const postJSON = JSON.stringify({ "product_parameter_value": getSelectedSize(), 'product_slug': slug, "operation_type": "add_product" });
 
-        xhttp.open("POST", `/edit_cart/`, true);
+        xhttp.open("POST", `/cart/edit/`, true);
         xhttp.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
         xhttp.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
         xhttp.send(postJSON);

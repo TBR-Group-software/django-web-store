@@ -24,7 +24,7 @@ function calculateSubtotal() {
 
   async function sendUpdatedProductDetails(cartAmountId, operationType) {
     try {
-      const response = await fetch('/edit_cart/', {
+      const response = await fetch('/cart/edit/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
@@ -84,6 +84,7 @@ function calculateSubtotal() {
         if (await sendUpdatedProductDetails(cartAmountId, "cart_remove")) {
           productContainer.remove();
           subtotalElement.innerHTML = calculateSubtotal();
+          minusCartItemCount()
         }
       });
     });

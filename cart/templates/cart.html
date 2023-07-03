@@ -60,12 +60,15 @@
                             </div>
                         </div>
                         <div class="col my-auto">
-                            <button type="button" class="btn-close float-end remove-item me-4" aria-label="Close"></button>
+                            <button type="button"
+                                    class="btn-close float-end remove-item me-4"
+                                    aria-label="Close"></button>
                         </div>
                     </div>
                 </div>
             </div>
         {% endfor %}
+        {% if cart.products.all|length == 0 %}<h4 class="my-5">Your cart is empty</h4>{% endif %}
         <div class="bottom-cart mt-4">
             <a class="link-primary" href="{% url 'user_interface:index' %}"><i class="fa-solid fa-chevron-left"></i><span class="ms-3">back to store.</span></a>
             <div class="float-end">
