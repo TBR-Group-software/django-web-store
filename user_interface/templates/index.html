@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+{% load cropping %}
+{% block title %}
+    {{ page_title }}
+{% endblock title %}
+{% block imports %}
+    {% compress css %}
+        <link type="text/x-scss"
+              rel="stylesheet"
+              href="{% static 'scss/index.scss' %}">
+    {% endcompress %}
+{% endblock imports %}
+{% block content %}
+    <div class="carusel-container d-flex align-items-center">
+        <div class="row">
+            <div id="imageCarousel"
+                 class="carousel slide col-lg-5 offset-lg-1"
+                 data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for product in main_products %}
+                        <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                            <a href="{% url 'product:product' product_slug=product.content_object.slug %}">
+                                <img src="{% cropped_thumbnail product 'cropping' %}"
+                                     class="d-block w-100"
+                                     alt="{{ product.content_object.name }}"
+                                     width="auto"
+                                     height="auto">
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if main_products|length > 1 %}
+                    <button class="carousel-control-prev"
+                            type="button"
+                            data-bs-target="#imageCarousel"
+                            data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next"
+                            type="button"
+                            data-bs-target="#imageCarousel"
+                            data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                {% endif %}
+            </div>
+            <div class="col-lg-6 pt-5">
+                <h2>Welcome to Shoe Store!</h2>
+                <p class="lead">Discover stylish and comfortable footwear for every occasion.</p>
+                <p>
+                    Explore our wide selection of trendy shoes for men and women. From casual sneakers to elegant heels, we have the perfect pair to elevate your style.
+                </p>
+                <p>
+                    Our curated collection features high-quality shoes from renowned brands. We prioritize comfort, durability, and fashion in every pair we offer.
+                </p>
+                <p>
+                    Enjoy a seamless shopping experience with our user-friendly website. Browse, filter, and find your perfect fit. We provide detailed product descriptions, size guides, and customer reviews to assist you.
+                </p>
+                <p>
+                    With fast shipping, secure payments, and hassle-free returns, your satisfaction is our priority. Step into a world of style and comfort with our fabulous footwear.
+                </p>
+                <p>
+                    <a class="btn btn-primary btn-lg"
+                       href="{% url 'category:category_list' %}"
+                       role="button">Shop Now</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="products-popular my-4">
+            <h2>Most Popular Products.</h2>
+            <div class="row my-4">
+                {% for product in popular_products %}
+                    <div class="card col-lg-3 product-card mb-3">
+                        <div class="bg-dark rounded-1">
+                            <img src="{% cropped_thumbnail product 'cropping' %}"
+                                 class="card-img-top"
+                                 alt="{{ product.content_object.name }}"
+                                 width="100%"
+                                 height="auto"
+                                 class="rounded-1">
+                            <div class="card-body position-relative">
+                                <h5 class="card-title mt-3">{{ product.content_object.name }}</h5>
+                                <p class="card-text">{{ product.content_object.short_description }}</p>
+                                <h4 class="price">${{ product.content_object.price|stringformat:".0f" }}</h4>
+                                <a href="{% url 'product:product' product_slug=product.content_object.slug %}"
+                                   class="btn {% if product.content_object.in_stock %}btn-second{% else %}btn-primary{% endif %} position-absolute mb-3 bottom-0 start-0">
+                                    {% if product.content_object.in_stock %}
+                                        Order
+                                    {% else %}
+                                        View
+                                    {% endif %}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="reviews-container">
+            <h2>Customer Reviews</h2>
+            <div class="reviews">
+                <div class="card"></div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

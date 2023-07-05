@@ -1,23 +1,5 @@
 @import "../../../user_interface/static/scss/base.scss";
 
-.product-card {
-    padding: 0 7px;
-
-    .card-body {
-        margin: 0 10px;
-        padding: 0 0 20px 0;
-        height: 230px;
-
-        .card-text {
-            height: 80px;
-        }
-
-        .btn {
-            width: 100%;
-        }
-    }
-}
-
 .price-filter {
     h4 {
         margin-top: 0;

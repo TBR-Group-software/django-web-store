@@ -1,0 +1,10 @@
+@import "base";
+
+.carusel-container{
+    background: $primary-gradient;
+    padding: 40px;
+
+    img{
+        border-radius: 50%;
+    }
+}
