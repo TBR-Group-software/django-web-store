@@ -29,7 +29,7 @@
 
 .main-info {
     @include media-breakpoint-up(md) {
-        max-height: 666px;
+        max-height: 716px;
     }
 }
 
@@ -105,4 +105,14 @@
 .color-container {
     max-height: 425px;
     overflow-y: scroll;
+}
+
+.add-review-container{
+    background-color: $third;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.form-submit-container{
+    height: 46px;
 }

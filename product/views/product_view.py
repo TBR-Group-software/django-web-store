@@ -3,6 +3,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
 from product.models import Product, ProductImage, ProductParameterValue
+from review.models import Review
 
 
 class ProductView(View):
@@ -15,14 +16,15 @@ class ProductView(View):
             .order_by("value")
             .values("value", "stock")
         )
-
         images = ProductImage.objects.filter(
             object_id=product.pk, content_type__model="product"
         )
+        reviews = Review.objects.filter(product=product)
         context = {
             "product": product,
             "sizes": sizes,
             "images": images,
+            "reviews": reviews,
         }
 
         return render(

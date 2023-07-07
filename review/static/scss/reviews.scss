@@ -1,0 +1,85 @@
+@import "../../../user_interface/static/scss/base.scss";
+
+
+.review {
+    background-color: $third;
+    border-radius: 15px;
+    padding: 20px;
+
+    .review-user {
+        p {
+            font-size: 25px;
+        }
+    }
+}
+
+
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+
+    .radio-input {
+        position: fixed;
+        opacity: 0;
+        pointer-events: none;
+
+        &:checked~.radio-label {
+            color: $primary;
+            color: $primary;
+        }
+
+        &:checked+.radio-label:hover,
+        &:checked+.radio-label:hover~.radio-label,
+        &:checked~.radio-label:hover,
+        &:checked~.radio-label:hover~.radio-label {
+            color: $primary;
+        }
+
+    }
+
+    .radio-label {
+        cursor: pointer;
+        font-size: 0;
+        color: $second;
+        transition: color 0.1s ease-in-out;
+
+        &:before {
+            content: "★";
+            display: inline-block;
+            font-size: 32px;
+        }
+
+        &:hover,
+        &:hover~.radio-label {
+            color: $primary-second;
+        }
+
+        &:hover~.radio-input:checked~.radio-label {
+            color: $primary-second;
+        }
+    }
+}
+
+.average-rating {
+    position: relative;
+    appearance: none;
+    color: transparent;
+    width: auto;
+    display: inline-block;
+    vertical-align: baseline;
+    font-size: 25px;
+
+    &::before {
+        --percent: calc(var(--rating-value) / 5 * 100%);
+        content: '★★★★★';
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: $second;
+        background: linear-gradient(90deg, $primary var(--percent), $second var(--percent));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
