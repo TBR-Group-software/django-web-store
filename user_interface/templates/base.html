@@ -40,8 +40,8 @@
                         aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <span class="navbar-toggler">Web Store</span>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <span class="navbar-toggler"><a class="link-primary" href="{% url 'user_interface:index' %}">Web Store</a></span>
+                <div class="collapse navbar-collapse d-none" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'user_interface:index' %}">Web Store</a>
@@ -66,7 +66,7 @@
                     </ul>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav ms-lg-auto ms-md-3 ms-sm-3 mb-2 mb-lg-0">
                         <li class="nav-item nav-item-icon position-relative">
                             <a class="nav-link cart-link" href="{% url 'cart:cart' %}">
                                 <i class="fa-solid fa-cart-shopping"></i>
@@ -79,7 +79,7 @@
                                 {% endif %}
                             </a>
                         </li>
-                        <li class="nav-item nav-item-icon">
+                        <li class="nav-item nav-item-icon mt-sm-3 mt-md-3 mt-xs-3 mt-lg-0">
                             <a class="nav-link" href="#"><i class="fa-solid fa-user"></i></a>
                         </li>
                     </ul>

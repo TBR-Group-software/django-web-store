@@ -57,7 +57,7 @@
                 </div>
                 <div class="col-lg-1 mt-5 color-container">
                     {% for linked_product in product.linked_products.all %}
-                        <a href="{% url 'product:product' product_slug=linked_product.slug %}">
+                        <a class="text-decoration-none" href="{% url 'product:product' product_slug=linked_product.slug %}">
                             <img src="{% cropped_thumbnail linked_product.id|get_product_image_url 'cropping' %}"
                                  alt="{{ linked_product.name }}"
                                  width="85px"
