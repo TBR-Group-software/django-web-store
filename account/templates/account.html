@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+{% load cropping %}
+{% block title %}
+    {{ page_title }}
+{% endblock title %}
+{% block imports %}
+    {% compress css %}
+        <link type="text/x-scss"
+              rel="stylesheet"
+              href="{% static 'scss/account.scss' %}">
+    {% endcompress %}
+{% endblock imports %}
+{% block content %}
+
+{% endblock content %}

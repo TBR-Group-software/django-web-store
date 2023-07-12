@@ -20,7 +20,7 @@ class ReviewsView(View):
         user = request.user
 
         review_stars = int(request.POST["star-input"][0])
-        review_text = request.POST["text"][0]
+        review_text = request.POST["text"]
         review_product = Product.objects.get(id=request.POST["product_id"][0])
 
         Review.objects.create(

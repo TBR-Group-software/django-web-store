@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "cart",
     "compressor",
     "review",
+    "account",
     "easy_thumbnails",
     "image_cropping",
 ]

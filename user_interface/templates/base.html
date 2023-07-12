@@ -55,9 +55,6 @@
                             <a class="nav-link" href="{% url 'category:category_list' %}">Categories</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Brands</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'review:reviews' %}">Reviews</a>
                         </li>
                         <li class="nav-item">
@@ -67,20 +64,24 @@
                 </div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-lg-auto ms-md-3 ms-sm-3 mb-2 mb-lg-0">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item nav-item-icon mt-sm-3 mt-md-3 mt-xs-3 mt-lg-0">
+                                <a class="nav-link" href="{% url 'account:account' %}"><i class="fa-solid fa-user"></i></a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item mt-sm-3 mt-md-3 mt-xs-3 mt-lg-0">
+                                <a class="nav-link" href="{% url 'account:login' %}">Login</a>
+                            </li>
+                        {% endif %}
                         <li class="nav-item nav-item-icon position-relative">
                             <a class="nav-link cart-link" href="{% url 'cart:cart' %}">
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 {% if user.is_authenticated %}
                                     {% with user|get_count_cart_items as cart_count %}
-                                        {% if cart_count > 0 %}
-                                        <i class="item-cart-count position-absolute">{{ cart_count }}</i>
-                                        {% endif %}
+                                        {% if cart_count > 0 %}<i class="item-cart-count position-absolute">{{ cart_count }}</i>{% endif %}
                                     {% endwith %}
                                 {% endif %}
                             </a>
-                        </li>
-                        <li class="nav-item nav-item-icon mt-sm-3 mt-md-3 mt-xs-3 mt-lg-0">
-                            <a class="nav-link" href="#"><i class="fa-solid fa-user"></i></a>
                         </li>
                     </ul>
                 </div>
