@@ -13,5 +13,23 @@
     {% endcompress %}
 {% endblock imports %}
 {% block content %}
-
+    <div class="container account-info-container mt-5">
+        <h1 class="mb-3">Account info.</h1>
+        <div class="d-inline-grid">
+            <label for="username">Username:</label>
+            <input type="text"
+                   name="username"
+                   class="input-primary"
+                   id="username"
+                   value="{{ user.username }}"
+                   disabled />
+            <label for="email">Email:</label>
+            <input type="text"
+                   name="email"
+                   class="input-primary"
+                   id="email"
+                   value="{{ user.email }}"
+                   disabled />
+        </div>
+    </div>
 {% endblock content %}

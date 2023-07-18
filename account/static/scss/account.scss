@@ -34,3 +34,9 @@ $alert-transform-y: -50%;
   left: $alert-left;
   transform: translate($alert-transform-x, $alert-transform-y);
 }
+
+.account-info-container{
+  background-color: $third;
+  padding: 30px;
+  border-radius: 20px;
+}
