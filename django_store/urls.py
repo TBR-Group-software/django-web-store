@@ -14,4 +14,5 @@ urlpatterns = [
     path("cart/", include(("cart.urls", "cart"), namespace="cart")),
     path("review/", include(("review.urls", "review"), namespace="review")),
     path("accounts/", include(("account.urls", "account"), namespace="account")),
+    path("contact/", include(("contact.urls", "contact"), namespace="contact")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

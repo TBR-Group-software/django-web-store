@@ -1,0 +1,13 @@
+@import "../../../user_interface/static/scss/base.scss";
+
+
+
+.contact-container{
+    background-color: $third;
+    padding: 20px;
+    border-radius: 15px;
+
+    .textarea-primary{
+        height: 300px;
+    }
+}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% load compress %}
+{% load cropping %}
+{% load get_product_image_url %}
+{% block title %}
+    {{ page_title }}
+{% endblock title %}
+{% block imports %}
+    {% compress css %}
+        <link type="text/x-scss"
+              rel="stylesheet"
+              href="{% static 'scss/contact.scss' %}">
+    {% endcompress %}
+{% endblock imports %}
+{% block content %}
+    <div class="container mt-4 contact-container">
+        <h1 class="mb-3">Contact us.</h1>
+        <form method="post" action="{% url 'contact:contact' %}">
+            {% csrf_token %}
+            <textarea class="textarea-primary mt-3" placeholder="your question." name="text"></textarea>
+            <input type="submit" class="btn btn-second mt-3" value="send question">
+        </form>
+    </div>
+{% endblock content %}
