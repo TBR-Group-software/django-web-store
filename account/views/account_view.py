@@ -6,7 +6,4 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 class AccountView(LoginRequiredMixin, View):
     def get(self, request: HttpRequest) -> HttpResponse:
-        return render(
-            request,
-            "account.html",
-        )
+        return render(request, "account.html", context={"page_title": "Account info."})
