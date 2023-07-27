@@ -1,6 +1,16 @@
 # Quiz project
 The purpose of this project is to make a prototype of an online store with a flexible system for setting up products, reviews, registration and a bunch of small features.
 
+<p float="center", align="justify">
+  <img src="https://github.com/TBR-Group-software/django-web-store/blob/main/img/mob_1.gif" width="250" />
+
+  <img src="https://github.com/TBR-Group-software/django-web-store/blob/main/img/mob_2.gif" width="250" />
+     
+  <img src="https://github.com/TBR-Group-software/django-web-store/blob/main/img/mob_3.gif" width="250" />
+</p>
+<p>
+  <img src="https://github.com/TBR-Group-software/django-web-store/blob/main/img/desk_1.gif" width="750" />
+</p>
 
 ## Features
 
