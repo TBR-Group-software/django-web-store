@@ -1,4 +1,4 @@
-# Quiz project
+# WebStore project
 The purpose of this project is to make a prototype of an online store with a flexible system for setting up products, reviews, registration and a bunch of small features.
 
 <p float="center", align="justify">
