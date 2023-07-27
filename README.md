@@ -80,14 +80,11 @@ pip3 install -r requirements-dev.txt
 Run PostgreSQL
 
 **Step 4:**
-Run RabbitMQ
-
-**Step 5:**
 Run django migrations
 ```
 python3 manage.py migrate
 ```
-**Step 6:**
+**Step 5:**
 Run Django server
 ```
 python3 manage.py runserver
